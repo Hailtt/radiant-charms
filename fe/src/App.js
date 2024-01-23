@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import "./scss/main.scss";
+import { PRIVATE_ROUTERS, PUBLIC_ROUTERS } from "./router/router";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [isLogin, setIslogin] = useState(true);
+	return isLogin ? (
+		<Routes>
+			{" "}
+			{PRIVATE_ROUTERS.map((item, idx) => {
+				let Layout = Fragment;
+				if (item.layout) {
+					Layout = item.layout;
+				}
+				const Page = item.component;
+				return (
+					<Route
+						path={item.path}
+						key={idx}
+						element={
+							<Layout>
+								<Page />
+							</Layout>
+						}
+					/>
+				);
+			})}{" "}
+		</Routes>
+	) : (
+		<Routes>
+			{" "}
+			{PUBLIC_ROUTERS.map((item, idx) => {
+				let Layout = Fragment;
+				if (item.layout) {
+					Layout = item.layout;
+				}
+				const Page = item.component;
+				return (
+					<Route
+						path={item.path}
+						key={idx}
+						element={
+							<Layout>
+								<Page />
+							</Layout>
+						}
+					/>
+				);
+			})}{" "}
+		</Routes>
+	);
 }
 
 export default App;
