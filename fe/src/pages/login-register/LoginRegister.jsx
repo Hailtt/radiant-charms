@@ -8,7 +8,6 @@ const LoginRegister = () => {
   return (
     <div className="RC-login-register">
       <img src={BackgroundImage} className="background" />
-
       {urlCurrent === "register" ? <FormRegister /> : <FormLogin />}
     </div>
   );
